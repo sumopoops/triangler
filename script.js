@@ -2,7 +2,7 @@
 
 let canvas = document.getElementById("c");
 let ctx = canvas.getContext("2d");
-let things = [];
+let triangles = [];
 let amount = 130;
 let image = new Image();
 let moveSpeed = 1.2;
@@ -18,21 +18,21 @@ function ClearCanvas() {
 }
 
 function Move() {
-	for (let i=0; i<things.length; i++) {
-		let t = things[i];
+	for (let i=0; i<triangles.length; i++) {
+		let t = triangles[i];
 		t.x += t.speed;
 		t.y += t.speed;
 	}
 }
 
 function CheckAndKill() {
-	for (let i=0; i<things.length; i++) {
+	for (let i=0; i<triangles.length; i++) {
 
 		// Remove dead triangles from array
-		if (things[i].x > canvas.width+100) {
-			things.splice(i, 1); 
-		} else if (things[i].y > canvas.height+100) {
-			things.splice(i, 1);
+		if (triangles[i].x > canvas.width+100) {
+			triangles.splice(i, 1); 
+		} else if (triangles[i].y > canvas.height+100) {
+			triangles.splice(i, 1);
 		}
 		
 	}
@@ -43,13 +43,13 @@ function Spawn() {
 	let speedRan = (Math.ceil(Math.random() * 2) * moveSpeed)
 	let xPos = RN((-canvas.width+300), canvas.width);
 	let yPos = RN((-canvas.height+300), -300);
-	things.push({x: xPos, y: yPos, w: size, h: size, speed: speedRan});
+	triangles.push({x: xPos, y: yPos, w: size, h: size, speed: speedRan});
 }
 
 function Draw() {
-	for (let i=0; i<things.length; i++) {
-		if (things[i].x > -300 || things[i].y > -300) {
-			ctx.drawImage(image, things[i].x, things[i].y, things[i].w, things[i].h);
+	for (let i=0; i<triangles.length; i++) {
+		if (triangles[i].x > -300 || triangles[i].y > -300) {
+			ctx.drawImage(image, triangles[i].x, triangles[i].y, triangles[i].w, triangles[i].h);
 		}
 	}
 }
@@ -67,7 +67,7 @@ function loop() {
 	ClearCanvas();
 	Move();
 	CheckAndKill();
-	if (things.length < amount) {
+	if (triangles.length < amount) {
 		Spawn();
 	}
 	Draw();
@@ -85,7 +85,7 @@ function main() {
 	for (i=0; i<1000; i++) {
 		Move();
 		CheckAndKill();
-		if (things.length < amount) {
+		if (triangles.length < amount) {
 			Spawn();
 		}
 		Draw();
