@@ -5,7 +5,7 @@ let ctx = canvas.getContext("2d");
 let triangles = [];
 let amount = 130;
 let image = new Image();
-let moveSpeed = 1.2;
+let moveSpeed = 0.8;
 image.src = "angle.svg";
 let firstRun = true;
 
@@ -30,7 +30,7 @@ function CheckAndKill() {
 
 		// Remove dead triangles from array
 		if (triangles[i].x > canvas.width+100) {
-			triangles.splice(i, 1); 
+			triangles.splice(i, 1);
 		} else if (triangles[i].y > canvas.height+100) {
 			triangles.splice(i, 1);
 		}
@@ -82,7 +82,7 @@ function main() {
 	canvas.height = window.innerHeight;
 
 	// Populate
-	for (i=0; i<1000; i++) {
+	for (i=0; i<1200; i++) {
 		Move();
 		CheckAndKill();
 		if (triangles.length < amount) {
