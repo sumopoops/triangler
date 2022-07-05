@@ -1,13 +1,15 @@
 //---------------------------------------------------------------------------- GLOBALS
 
-let canvas = document.getElementById("c");
-let ctx = canvas.getContext("2d");
+const canvas = document.getElementById("c");
+const ctx = canvas.getContext("2d");
 let triangles = [];
-let amount = 130;
-let image = new Image();
-let moveSpeed = 0.8;
+const image = new Image();
 image.src = "angle.svg";
 let firstRun = true;
+
+// Behaviors
+let moveSpeed = 0.8;
+let maxTriangles = 130;
 
 
 
@@ -67,7 +69,7 @@ function loop() {
 	ClearCanvas();
 	Move();
 	CheckAndKill();
-	if (triangles.length < amount) {
+	if (triangles.length < maxTriangles) {
 		Spawn();
 	}
 	Draw();
@@ -85,10 +87,9 @@ function main() {
 	for (i=0; i<1200; i++) {
 		Move();
 		CheckAndKill();
-		if (triangles.length < amount) {
+		if (triangles.length < maxTriangles) {
 			Spawn();
 		}
-		Draw();
 	}
 	
 	requestAnimationFrame(loop);
