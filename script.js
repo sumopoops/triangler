@@ -5,11 +5,10 @@ const ctx = canvas.getContext("2d");
 let triangles = [];
 const image = new Image();
 image.src = "angle.svg";
-let firstRun = true;
 
 // Behaviors
 let moveSpeed = 0.8;
-let maxTriangles = 130;
+let maxTriangles = (window.innerHeight/1440) * 220;
 
 
 
@@ -31,9 +30,7 @@ function CheckAndKill() {
 	for (let i=0; i<triangles.length; i++) {
 
 		// Remove dead triangles from array
-		if (triangles[i].x > canvas.width+100) {
-			triangles.splice(i, 1);
-		} else if (triangles[i].y > canvas.height+100) {
+		if (triangles[i].x > canvas.width+100 || triangles[i].y > canvas.height+100) {
 			triangles.splice(i, 1);
 		}
 		
@@ -41,11 +38,13 @@ function CheckAndKill() {
 }
 
 function Spawn() {
-	let size = (Math.ceil(Math.random() * 2) * 100)
-	let speedRan = (Math.ceil(Math.random() * 2) * moveSpeed)
-	let xPos = RN((-canvas.width+300), canvas.width);
-	let yPos = RN((-canvas.height+300), -300);
-	triangles.push({x: xPos, y: yPos, w: size, h: size, speed: speedRan});
+	if (triangles.length < maxTriangles) {
+		let size = (Math.ceil(Math.random() * 2) * 100)
+		let speedRan = (Math.ceil(Math.random() * 2) * moveSpeed)
+		let xPos = RN(-(canvas.width*1.5) , canvas.width);
+		let yPos = RN(-(canvas.height*1.5), -200);
+		triangles.push({x: xPos, y: yPos, w: size, h: size, speed: speedRan});
+	}
 }
 
 function Draw() {
@@ -69,9 +68,7 @@ function loop() {
 	ClearCanvas();
 	Move();
 	CheckAndKill();
-	if (triangles.length < maxTriangles) {
-		Spawn();
-	}
+	Spawn();
 	Draw();
 
 	requestAnimationFrame(loop);
@@ -86,10 +83,7 @@ function main() {
 	// Populate
 	for (i=0; i<1200; i++) {
 		Move();
-		CheckAndKill();
-		if (triangles.length < maxTriangles) {
-			Spawn();
-		}
+		Spawn();
 	}
 	
 	requestAnimationFrame(loop);
