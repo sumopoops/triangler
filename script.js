@@ -5,8 +5,6 @@ const ctx = canvas.getContext("2d");
 let triangles = [];
 const image = new Image();
 image.src = "angle.svg";
-
-// Behaviors
 let moveSpeed = 0.8;
 let maxTriangles = (window.innerHeight/1440) * 220;
 
@@ -50,6 +48,10 @@ function Spawn() {
 function Draw() {
 	for (let i=0; i<triangles.length; i++) {
 		if (triangles[i].x > -300 || triangles[i].y > -300) {
+			triangles[i].x = Math.round(triangles[i].x);
+			triangles[i].y = Math.round(triangles[i].y);
+			triangles[i].w = Math.round(triangles[i].w);
+			triangles[i].h = Math.round(triangles[i].h);
 			ctx.drawImage(image, triangles[i].x, triangles[i].y, triangles[i].w, triangles[i].h);
 		}
 	}
